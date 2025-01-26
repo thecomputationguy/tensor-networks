@@ -16,7 +16,7 @@ def split(M, bond_dim):
 
     return U, S, Vd
 
-def dense_to_mps(psi, bond_dim):
+def dense_to_mps(psi, bond_dim, num_sites):
     """
     Turn a dense state vector psi into an MPS with bond dimension bond_dim.
     """
@@ -31,7 +31,7 @@ def dense_to_mps(psi, bond_dim):
     bondL = Vd.shape[0]
     psi = np.tensordot(np.diag(S), Vd, 1)
 
-    for _ in range(n-2):
+    for _ in range(num_sites - 2):
         psi = np.reshape(psi, (2*bondL, -1))
         U, S, Vd = split(psi, bond_dim)
         Ms.append(U)
